@@ -103,7 +103,7 @@ public class GameLogic : MonoBehaviour
             SpawnWinLine(WinLineDirection.Diagonal);
             return true;
         }
-        if (mapArray[0, 2] == mapArray[1, 1] && mapArray[0, 2] == mapArray[2, 0] && mapArray[0, 0] != "" ){
+        if (mapArray[0, 2] == mapArray[1, 1] && mapArray[0, 2] == mapArray[2, 0] && mapArray[0, 2] != "" ){
             SpawnWinLine(WinLineDirection.OtherDiagonal);
             return true;
         }
