@@ -6,15 +6,17 @@ using UnityEngine;
 public class GameLogic : MonoBehaviour
 {
     public GameObject Tile;
+    private UITileBehaviour uiTile;
     public GameObject WinLine;
     public float tileDistance = 1;
     private int mapSize = 3;
     public bool xTurn = true;
     public bool gameEnded = false;
     private string[,] mapArray;
-    // Start is called before the first frame update
+
     void Start()
     {
+        uiTile = GameObject.FindGameObjectWithTag("UITile").GetComponent<UITileBehaviour>();
         mapArray = GenerateEmptyMapArray();
         SpawnTiles();
     }
@@ -53,6 +55,7 @@ public class GameLogic : MonoBehaviour
             // trigger win
             gameEnded = true;
         } else{
+            uiTile.RotateUITile(xTurn);
             xTurn = !xTurn;
         }
     }
