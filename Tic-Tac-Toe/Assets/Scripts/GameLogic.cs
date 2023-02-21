@@ -6,15 +6,18 @@ using UnityEngine;
 public class GameLogic : MonoBehaviour
 {
     public GameObject Tile;
+    // private UITileBehaviour uiTile;
     public GameObject WinLine;
+    public GameEndedScript winScreen;
     public float tileDistance = 1;
     private int mapSize = 3;
     public bool xTurn = true;
     public bool gameEnded = false;
     private string[,] mapArray;
-    // Start is called before the first frame update
+
     void Start()
     {
+        // uiTile = GameObject.FindGameObjectWithTag("UITile").GetComponent<UITileBehaviour>();
         mapArray = GenerateEmptyMapArray();
         SpawnTiles();
     }
@@ -50,9 +53,13 @@ public class GameLogic : MonoBehaviour
         int column = index / mapSize;
         mapArray[row, column] = GetTurn();
         if (TestWin()){
-            // trigger win
+            winScreen.ShowWinScreen(GetTurn() + " Wins!");
             gameEnded = true;
-        } else{
+        } else if(testTie()){
+            winScreen.ShowWinScreen("It's a Tie!");
+            gameEnded = true;
+        } else {
+            FindAnyObjectByType<UITileBehaviour>().RotateUITile(xTurn);
             xTurn = !xTurn;
         }
     }
@@ -110,6 +117,16 @@ public class GameLogic : MonoBehaviour
         
         return  false;
     }
+    private bool testTie() {
+        int occupiedTiles = 0;
+        for (int i = 0; i < mapArray.GetLength(0); i++)
+        {
+            for (int j = 0; j < mapArray.GetLength(1); j++) {
+                if (mapArray[i, j] != "") occupiedTiles++;
+            }
+        }
+        return occupiedTiles == mapSize * mapSize;
+    }
     private void SpawnWinLine(WinLineDirection drection ,int start = 1)
     {
         if (drection == WinLineDirection.Horizonal)
@@ -119,7 +136,7 @@ public class GameLogic : MonoBehaviour
         }
         if (drection == WinLineDirection.Vertical)
         {
-            Vector3 spawnPosition = new Vector3((start / mapSize), (start % mapSize) + 1, -2) * tileDistance;
+            Vector3 spawnPosition = new Vector3((start % mapSize), (start / mapSize) + 1, -2) * tileDistance;
             GameObject winLine = Instantiate(WinLine, spawnPosition, Quaternion.identity);
             winLine.GetComponent<WinLineScript>().isVertical();
         }

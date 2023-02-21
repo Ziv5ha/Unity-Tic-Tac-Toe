@@ -33,14 +33,8 @@ public class TileBehaviour : MonoBehaviour
         float singleStep = rotationSpeen * Time.deltaTime;
         if (gameLogic.xTurn){
             anim.SetTrigger("x");
-            // transform.Rotate(Vector3.up, 90);
         } else {
             anim.SetTrigger("o");
-            // transform.Rotate(Vector3.up, -90);
         }
-        // Vector3 targetDirection = gameLogic.xTurn ? new Vector3(0, 90, 0) : new Vector3(0, -90, 0);
-        // Vector3 newDirection = Vector3.RotateTowards(transform.forward, new Vector3(0, 90, 0), singleStep, 0);
-        // transform.rotation = Quaternion.LookRotation(newDirection);
-        // Debug.Log("Rotated");
     }
 }
