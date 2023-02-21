@@ -10,18 +10,12 @@ public class TileBehaviour : MonoBehaviour
     public int index;
     [SerializeField] private float rotationSpeen = 1;
     private bool clicked = false; 
-    // Start is called before the first frame update
     void Start()
     {
         gameLogic = GameObject.FindGameObjectWithTag("Map").GetComponent<GameLogic>();
         anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnMouseDown() {
         if (!clicked && !gameLogic.gameEnded){
             RotateTile();

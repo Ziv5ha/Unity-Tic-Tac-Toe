@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameLogic : MonoBehaviour
 {
     public GameObject Tile;
-    // private UITileBehaviour uiTile;
     public GameObject WinLine;
     public GameEndedScript winScreen;
     public float tileDistance = 1;
@@ -15,8 +14,14 @@ public class GameLogic : MonoBehaviour
     public bool gameEnded = false;
     private string[,] mapArray;
 
+    // private UITileBehaviour uiTile;
     void Start()
     {
+        // I left this Comment in to remember to ask you the best practice for this.
+        // If I have a GameObject that I use once sould I keep it as private and get access to it like so?
+        // Should I just Give it public access and Import it from Unity?
+        // Or maybe use the single line of code I used in line 67? 
+        // Is it even "acceptable" use a GameObject as a UI element?
         // uiTile = GameObject.FindGameObjectWithTag("UITile").GetComponent<UITileBehaviour>();
         mapArray = GenerateEmptyMapArray();
         SpawnTiles();
@@ -154,19 +159,20 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    // For Debugging.
     public void printMap()
     { 
-        string print = "\n[\n";
-        for (int i = 0; i < mapArray.GetLength(0); i++)
+        string print = "\n";
+        for (int i = mapArray.GetLength(0)-1; i >= 0; i--)
         {
             print += " [";
             for (int j = 0; j < mapArray.GetLength(1); j++) {
                 print += mapArray[i, j] != "" ? mapArray[i, j] : "-";
                 if (j+1 < mapArray.GetLength(1)) print += ", ";
             }
-            print += "]\n";
+            print += "]";
+            if (i > 0) print += "\n";
         }
-        print += "]";
         Debug.Log(print);
     }
 }
