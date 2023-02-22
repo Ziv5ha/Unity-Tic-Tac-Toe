@@ -9,5 +9,5 @@ this is a Tic Tac Toe game developed as a home assignment in Unity.
 
 ## Link
 [Tic Tac Toe](https://simmer.io/@ziv5ha/tic-tac-toe)\
-**Currently there's a visual bug this build that removes a visual effect particles.*\
+**Currently there's a visual bug this build that removes a visual effect particles.* \
 ***This bug does not effect the game and exist only in the build. Playing the game through Unity works as expected*
