@@ -58,9 +58,11 @@ public class GameLogic : MonoBehaviour
         int column = index / mapSize;
         mapArray[row, column] = GetTurn();
         if (TestWin()){
+            GetComponent<ScoreManager>().IncreaseScore(xTurn);
             winScreen.ShowWinScreen(GetTurn() + " Wins!");
             gameEnded = true;
         } else if(testTie()){
+            GetComponent<ScoreManager>().IncreaseTieScore();
             winScreen.ShowWinScreen("It's a Tie!");
             gameEnded = true;
         } else {
