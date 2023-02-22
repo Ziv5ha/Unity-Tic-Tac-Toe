@@ -8,6 +8,6 @@ this is a Tic Tac Toe game developed as a home assignment in Unity.
 4. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.
 
 ## Link
-[Tic Tac Toe](https://simmer.io/@ziv5ha/tic-tac-toe)
-**Currently there's a visual bug this build that removes a visual effect particles.*
+[Tic Tac Toe](https://simmer.io/@ziv5ha/tic-tac-toe)\
+**Currently there's a visual bug this build that removes a visual effect particles.*\
 ***This bug does not effect the game and exist only in the build. Playing the game through Unity works as expected*
