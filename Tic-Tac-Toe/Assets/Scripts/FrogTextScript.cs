@@ -8,8 +8,8 @@ public class FrogTextScript : MonoBehaviour
     public TextMeshProUGUI frogText;
 
     private string[] winTextBank = {
-        "Ninga Frog congratulates you on your win.",
-        "Ninga Frog congratulates you on a great game.",
+        "Ninja Frog congratulates you on your win.",
+        "Ninja Frog congratulates you on a great game.",
         "That was a close One!",
         "Great game everyone.",
         "Best game I've seen so far.",
@@ -22,7 +22,7 @@ public class FrogTextScript : MonoBehaviour
         "Rematch?"
         };
     private string[] tieTextBank = {
-        "Ninga Frog congratulates you on a great game.",
+        "Ninja Frog congratulates you on a great game.",
         "That was a close One!",
         "Great game everyone.",
         "Maybe the real win is the friends we made along the way.",
