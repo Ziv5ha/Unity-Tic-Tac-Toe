@@ -50,7 +50,6 @@ public class ScoreManager : MonoBehaviour
     private void SaveIntoJson(){
         updateScoreOnUI();
         string score = JsonUtility.ToJson(new Score(x, o, tie)); 
-        Debug.Log("Saved at: " + Application.persistentDataPath);
         System.IO.File.WriteAllText(Application.persistentDataPath + "/GameScore.json", score);
     }
 }
