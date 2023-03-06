@@ -9,10 +9,12 @@ public class TileBehaviour : MonoBehaviour
     private MeshRenderer meshRenderer;
     private GameLogic gameLogic;
     public int index;
+    // !@! speeeeeen
     [SerializeField] private float rotationSpeen = 1;
     private bool clicked = false; 
     void Start()
     {
+        // !@! See comments on GameLogic script. Generally speaking, a view should never tell a controller what to do directly. We will go more in depth on this.
         gameLogic = GameObject.FindGameObjectWithTag("Map").GetComponent<GameLogic>();
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -42,6 +44,7 @@ public class TileBehaviour : MonoBehaviour
         }
     }
     private bool availableTile(){
+        //!@! This function might be more fitting in a controller class. Just call the function on gameLogic and it will know if the game is ended or not.
         return !clicked && !gameLogic.gameEnded;
     }
 }

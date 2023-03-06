@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+//!@! Now this is a perfect class!
 public class FrogTextScript : MonoBehaviour
 {
     public TextMeshProUGUI frogText;

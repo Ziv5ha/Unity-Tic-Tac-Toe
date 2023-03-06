@@ -13,12 +13,14 @@ public class ScoreManager : MonoBehaviour
     private int tie;
 
     private void Start() {
+        //!@! This is a bit of an overkill. We have PlayerPrefs in Unity that works out of the box. No need to use System.IO
         string scoreLocation = Application.persistentDataPath + "/GameScore.json";
         string scoreJson = System.IO.File.ReadAllText(scoreLocation);
         Score score = JsonUtility.FromJson<Score>(scoreJson);
         x = score.X;
         o = score.O;
         tie = score.Tie;
+        //!@! Is this a controller or a view? Consider separating the two roles to two different classes.
         updateScoreOnUI();
 
     }
@@ -41,6 +43,7 @@ public class ScoreManager : MonoBehaviour
         SaveIntoJson();
     }
 
+    //!@! naming conventions! Not that important just keep note of this.
     private void updateScoreOnUI(){
         XUI.text = x.ToString();
         OUI.text = o.ToString();
