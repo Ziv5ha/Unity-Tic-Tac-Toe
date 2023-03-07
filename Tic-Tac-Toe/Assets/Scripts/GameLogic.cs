@@ -67,7 +67,7 @@ public class GameLogic : MonoBehaviour
         }
         return map;
     }// !@! general practice: consistent lines between functions and consistent naming conventions. New lines after functions. testTie() and printMap() are not the same naming convention as the rest here...
-    private void SpawnTiles(){
+    private void SpawnTiles() {
         for (int i = 0; i < mapSize*mapSize; i++)
         {
             // !@! consider setting the tiles parent object so the scene won't get cluttered either with tile.transform.SetParent(parentTransform) or inside the Instantiate function after the Quaternion.identity
@@ -75,7 +75,7 @@ public class GameLogic : MonoBehaviour
             tile.GetComponent<TileBehaviour>().index =  i;
         }
     }
-    private Vector3 GetTileSpawnPosition(int index){
+    private Vector3 GetTileSpawnPosition(int index) {
         int row = index % mapSize;
         int column = index / mapSize;
         return new Vector3(column, row, 0) * tileDistance;
@@ -85,7 +85,7 @@ public class GameLogic : MonoBehaviour
 // Play
 //!@! I don't like that this function is being called by the TileBehaviour script, it confuses the hierarchy between the objects.
 // You should look into events/actions, it's a cleaner way to setup View->Controller commands.
-    public void PlayTurn(int index){
+    public void PlayTurn(int index) {
         int row = index % mapSize;
         int column = index / mapSize;
         mapArray[row, column] = GetTurn();
@@ -95,7 +95,7 @@ public class GameLogic : MonoBehaviour
             GetComponent<FrogTextScript>().Win();
             winScreen.ShowWinScreen(GetTurn() + " Wins!");
             gameEnded = true;
-        } else if(testTie()){
+        } else if(TestTie()){
             //!@! see previous comment
             GetComponent<ScoreManager>().IncreaseTieScore();
             GetComponent<FrogTextScript>().Tie();
@@ -118,7 +118,7 @@ public class GameLogic : MonoBehaviour
     {
         Vertical, Horizonal, Diagonal, OtherDiagonal
     }
-    private bool TestWin(){
+    private bool TestWin() {
         bool shouldWin = false;
         for (int i = 0; i < mapSize; i++)
         {
@@ -150,7 +150,7 @@ public class GameLogic : MonoBehaviour
     }
 
 
-    private bool TestDiagonalWin(){
+    private bool TestDiagonalWin() {
         // !@! simple and nice. Please note though that it works differently from the TestSingleRowAndColumnWin that can work with an arbitrary mapSize.
         // might consider changing to different approach so as to keep that functionality
         if (mapArray[0, 0] == mapArray[1, 1] && mapArray[0, 0] == mapArray[2, 2] && mapArray[0, 0] != "" ){
@@ -164,24 +164,18 @@ public class GameLogic : MonoBehaviour
         
         return  false;
     }
-    private bool testTie() {
-        // !@! Add a break in this loop to save time. For example
-        // for (int i = 0; i < mapArray.GetLength(0); i++) {
-        //     for (int j = 0; j < mapArray.GetLength(1); j++) {
-        //         if (mapArray[i, j] == "") return false;
-        //     }
-        // }
-        int occupiedTiles = 0;
-        for (int i = 0; i < mapArray.GetLength(0); i++)
-        {
+    private bool TestTie() {
+        // int occupiedTiles = 0;
+        for (int i = 0; i < mapArray.GetLength(0); i++) {
             for (int j = 0; j < mapArray.GetLength(1); j++) {
-                if (mapArray[i, j] != "") occupiedTiles++;
+                if (mapArray[i, j] == "") return false;
+                // if (mapArray[i, j] != "") occupiedTiles++;
             }
         }
-        return occupiedTiles == mapSize * mapSize;
+        // return occupiedTiles == mapSize * mapSize;
+        return true;
     }
-    private void SpawnWinLine(WinLineDirection drection ,int start = 1)
-    {
+    private void SpawnWinLine(WinLineDirection drection ,int start = 1) {
         if (drection == WinLineDirection.Horizonal)
         {
             Vector3 spawnPosition = new Vector3((start / mapSize) + 1, (start % mapSize), -2) * tileDistance;
@@ -208,8 +202,7 @@ public class GameLogic : MonoBehaviour
     }
 
     // For Debugging.
-    public void printMap()
-    { 
+    public void PrintMap() { 
         string print = "\n";
         for (int i = mapArray.GetLength(0)-1; i >= 0; i--)
         {
