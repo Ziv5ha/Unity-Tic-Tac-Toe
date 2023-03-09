@@ -320,6 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1acb56af777fe4e4e969c39a98896690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UITile: {fileID: 266948424}
   Tile: {fileID: 4840374527838860464, guid: 6de5b60a9bb9fb742a6269c58ea108b8, type: 3}
   WinLine: {fileID: 6608361887104849676, guid: faba48634d3aecf448692e4a1c387e32, type: 3}
   winScreen: {fileID: 632419530}
