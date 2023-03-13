@@ -60,27 +60,39 @@ public class GameLogic : MonoBehaviour
         frog = GetComponent<FrogTextScript>();
         StartGame();
     }
+
+    private void OnEnable()
+    {
+        EventsManager.OnPlayTurn += PlayTurn;
+        EventsManager.OnPlayAgain += StartGame;
+    }
+    private void OnDisable()
+    {
+        EventsManager.OnPlayTurn -= PlayTurn;
+        EventsManager.OnPlayAgain -= StartGame;
+    }
     // Start Game
     [ContextMenu("Restart Game")]
     private void StartGame()
     {
         ClearGame();
+        gameEnded = false;
         mapArray = GenerateEmptyMapArray();
         SpawnTiles();
     }
     private void ClearGame()
     {
         GameObject Tiles = GameObject.Find("Tiles");
+        GameObject WinLine = GameObject.Find("WinLine(Clone)");
         if (Tiles != null)
         {
-            Debug.Log("clear game");
             Destroy(Tiles);
         }
-        else
+        if (WinLine != null)
         {
-            Debug.Log("no game found");
+            Destroy(WinLine);
         }
-        Debug.Log("generating new game");
+
     }
     private string[,] GenerateEmptyMapArray()
     {
@@ -113,9 +125,16 @@ public class GameLogic : MonoBehaviour
     }
 
     // Play
-    //!@! I don't like that this function is being called by the TileBehaviour script, it confuses the hierarchy between the objects.
-    // You should look into events/actions, it's a cleaner way to setup View->Controller commands.
-    public void PlayTurn(int index)
+    public bool AvailableTile(bool clicked)
+    {
+        // Can also be implemented with the tile's index.
+        // int row = index % mapSize;
+        // int column = index / mapSize;
+        // return mapArray[row, column] != "" && !gameEnded;
+        // I don't know which is better, storing another boolean value or doing these calculations.
+        return !clicked && !gameEnded;
+    }
+    private void PlayTurn(int index)
     {
         int row = index % mapSize;
         int column = index / mapSize;
@@ -188,14 +207,20 @@ public class GameLogic : MonoBehaviour
 
     private bool TestDiagonalWin()
     {
-        // !@! simple and nice. Please note though that it works differently from the TestSingleRowAndColumnWin that can work with an arbitrary mapSize.
-        // might consider changing to different approach so as to keep that functionality
-        if (mapArray[0, 0] == mapArray[1, 1] && mapArray[0, 0] == mapArray[2, 2] && mapArray[0, 0] != "")
+        int diagonal = 0;
+        int otherDiagonal = 0;
+        int ms = mapSize - 1;
+        for (int i = 0; i < mapSize; i++)
+        {
+            if (mapArray[0, 0] == mapArray[i, i] && mapArray[i, i] != "") diagonal++;
+            if (mapArray[0, ms] == mapArray[i, ms - i] && mapArray[i, ms - i] != "") otherDiagonal++;
+        }
+        if (diagonal == mapSize)
         {
             SpawnWinLine(WinLineDirection.Diagonal);
             return true;
         }
-        if (mapArray[0, 2] == mapArray[1, 1] && mapArray[0, 2] == mapArray[2, 0] && mapArray[0, 2] != "")
+        if (otherDiagonal == mapSize)
         {
             SpawnWinLine(WinLineDirection.OtherDiagonal);
             return true;
@@ -205,16 +230,13 @@ public class GameLogic : MonoBehaviour
     }
     private bool TestTie()
     {
-        // int occupiedTiles = 0;
         for (int i = 0; i < mapArray.GetLength(0); i++)
         {
             for (int j = 0; j < mapArray.GetLength(1); j++)
             {
                 if (mapArray[i, j] == "") return false;
-                // if (mapArray[i, j] != "") occupiedTiles++;
             }
         }
-        // return occupiedTiles == mapSize * mapSize;
         return true;
     }
     private void SpawnWinLine(WinLineDirection drection, int start = 1)

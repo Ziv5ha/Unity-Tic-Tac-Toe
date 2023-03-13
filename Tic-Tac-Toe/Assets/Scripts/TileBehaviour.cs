@@ -15,6 +15,7 @@ public class TileBehaviour : MonoBehaviour
     void Start()
     {
         // !@! See comments on GameLogic script. Generally speaking, a view should never tell a controller what to do directly. We will go more in depth on this.
+        // I created actions to play a turn and restart the game but I srill need to access the gameLogic here to know if a tile is available and to know which way to rotate the tile.
         gameLogic = GameObject.FindGameObjectWithTag("Map").GetComponent<GameLogic>();
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -22,7 +23,7 @@ public class TileBehaviour : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (availableTile())
+        if (gameLogic.AvailableTile(clicked))
         {
             meshRenderer.material.color = new Color(0f, 0f, 0f, 0.10f);
         }
@@ -33,10 +34,10 @@ public class TileBehaviour : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (availableTile())
+        if (gameLogic.AvailableTile(clicked))
         {
             RotateTile();
-            gameLogic.PlayTurn(index);
+            EventsManager.OnPlayTurn?.Invoke(index);
             clicked = true;
         }
     }
@@ -52,9 +53,5 @@ public class TileBehaviour : MonoBehaviour
             anim.SetTrigger("o");
         }
     }
-    private bool availableTile()
-    {
-        //!@! This function might be more fitting in a controller class. Just call the function on gameLogic and it will know if the game is ended or not.
-        return !clicked && !gameLogic.gameEnded;
-    }
+
 }
