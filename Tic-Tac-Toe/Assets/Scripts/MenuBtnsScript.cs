@@ -5,11 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class MenuBtnsScript : MonoBehaviour
 {
-    public void Play(){
+    public void Play()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    public void Quit(){
+    public void Quit()
+    {
         Debug.Log("Quit game.");
         Application.Quit();
     }
+
 }

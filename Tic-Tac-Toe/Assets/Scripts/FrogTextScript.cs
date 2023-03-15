@@ -26,7 +26,7 @@ public class FrogTextScript : MonoBehaviour
         "That was a close One!",
         "Great game everyone.",
         "Maybe the real win is the friends we made along the way.",
-        "BOOO! I 'm here to see you win!", 
+        "BOOO! I 'm here to see you win!",
         "Fantastic game.",
         "Great effort.",
         "This game went nowhere.",
@@ -35,12 +35,14 @@ public class FrogTextScript : MonoBehaviour
     };
 
 
-    public void Win(){
-        string randomText = winTextBank[Random.Range(0, winTextBank.Length-1)];
+    public void Win()
+    {
+        string randomText = winTextBank[Random.Range(0, winTextBank.Length - 1)];
         frogText.text = randomText;
     }
-    public void Tie(){
-        string randomText = tieTextBank[Random.Range(0, tieTextBank.Length-1)];
+    public void Tie()
+    {
+        string randomText = tieTextBank[Random.Range(0, tieTextBank.Length - 1)];
         frogText.text = randomText;
     }
 

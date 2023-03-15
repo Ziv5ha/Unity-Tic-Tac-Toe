@@ -6,18 +6,22 @@ public class UITileBehaviour : MonoBehaviour
 {
     private Animator anim;
     // !@! speeeeeeeeeeeeeeeeeen
-    [SerializeField] private float rotationSpeen = 1;
+    [SerializeField] private float SpinSpeed = 1;
 
     void Start()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void RotateUITile(bool xTurn){
-        float singleStep = rotationSpeen * Time.deltaTime;
-        if (xTurn){
+    public void RotateUITile(bool xTurn)
+    {
+        float singleStep = SpinSpeed * Time.deltaTime;
+        if (xTurn)
+        {
             anim.SetTrigger("playedX");
-        } else {
+        }
+        else
+        {
             anim.SetTrigger("playedO");
         }
     }
