@@ -86,13 +86,11 @@ public class AudioManager : MonoBehaviour
     public bool ControlMusic()
     {
         CanPlayMusic = !CanPlayMusic;
-        Debug.Log("Music: " + CanPlayMusic);
         return CanPlayMusic;
     }
     public bool ControlSoundEffects()
     {
         CanPlaySoundEffects = !CanPlaySoundEffects;
-        Debug.Log("SoundEffects: " + CanPlaySoundEffects);
         return CanPlaySoundEffects;
     }
 }
