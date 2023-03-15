@@ -8,6 +8,7 @@ public class GameLogic : MonoBehaviour
     private ScoreManager scoreManager;
     private FrogTextScript frog;
     [SerializeField] private UITileBehaviour UITile;
+    [SerializeField] private AudioManager audioManager;
     public GameObject Tile;
     public GameObject WinLine;
     public GameEndedScript winScreen;
@@ -18,44 +19,8 @@ public class GameLogic : MonoBehaviour
     //!@! I personally don't like the array being of type string. A better fitting type can be used (byte for example)
     private string[,] mapArray;
 
-    // private UITileBehaviour uiTile;
     void Start()
     {
-        // I left this Comment in to remember to ask you the best practice for this.
-        // If I have a GameObject that I use once sould I keep it as private and get access to it like so?
-        // Should I just Give it public access and Import it from Unity?
-        // Or maybe use the single line of code I used in line 67? 
-        // Is it even "acceptable" use a GameObject as a UI element?
-        // uiTile = GameObject.FindGameObjectWithTag("UITile").GetComponent<UITileBehaviour>();
-
-        //!@! I didn't completely understand the question. If you want to have a reference to an object
-        // you should set it in Unity using either a public reference or [SerializeField], depending on your needs.
-        // If you must find an object you can use the FindGameObjectWithTag() once like you did here.
-        // Generally either way is fine as long as you don't make too many calls to any type of FindGameObject (FindAnyObjectOfType, GameObject.Find etc.)
-        // which can be pretty memory intensive while also being inconsistent due to having to be active in the scene hierarchy in order to be found.
-        // Another thing to take into consideration is the order of operations. Say you have a gameController type object that calls a lot of functions on
-        // views for example. We cannot be sure in which order the Start() functions will take place. So this might be a problem. For example:
-        /*
-         gameController:
-        [SerializeField] private ViewType view;
-        private void Start() {
-            view.PrintSetting();
-        }
-
-        view:
-        private Settings settings;
-        private void Start() {
-            settings = FindGameObjectWithTag("Settings").GetComponent<Settings>();
-        }
-
-        public void PrintSetting() {
-            Debug.Log(settings.MAX_NUMBER_OF_PLAYERS);
-        }
-         */
-        // In this example we might call the gameController Start() function first and this will cause a null reference error on the view.PrintSetting() function
-        // since it hasn't been initialized properly. To circumvent this we can either set the settings as a [SerializeField] or add an Init() function called by
-        // the gameController before any calls to view.PrintSetting(). Personally I like having only one class that has an Awake() or Start() method that calls
-        // Init() methods on all other classes. Hierarchy is a beautiful thing in code.
         scoreManager = GetComponent<ScoreManager>();
         frog = GetComponent<FrogTextScript>();
         StartGame();
@@ -139,8 +104,10 @@ public class GameLogic : MonoBehaviour
         int row = index % mapSize;
         int column = index / mapSize;
         mapArray[row, column] = GetTurn();
+        audioManager.PlayXOSound(xTurn);
         if (TestWin())
         {
+            audioManager.PlayWinSound();
             scoreManager.IncreaseScore(xTurn);
             frog.Win();
             winScreen.ShowWinScreen(GetTurn() + " Wins!");
@@ -148,6 +115,7 @@ public class GameLogic : MonoBehaviour
         }
         else if (TestTie())
         {
+            audioManager.PlayTieSound();
             scoreManager.IncreaseTieScore();
             frog.Tie();
             winScreen.ShowWinScreen("It's a Tie!");

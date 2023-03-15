@@ -15,7 +15,7 @@ public class TileBehaviour : MonoBehaviour
     void Start()
     {
         // !@! See comments on GameLogic script. Generally speaking, a view should never tell a controller what to do directly. We will go more in depth on this.
-        // I created actions to play a turn and restart the game but I srill need to access the gameLogic here to know if a tile is available and to know which way to rotate the tile.
+        // I created actions to play a turn and restart the game but I still need to access the gameLogic here to know if a tile is available and to know which way to rotate the tile.
         gameLogic = GameObject.FindGameObjectWithTag("Map").GetComponent<GameLogic>();
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
