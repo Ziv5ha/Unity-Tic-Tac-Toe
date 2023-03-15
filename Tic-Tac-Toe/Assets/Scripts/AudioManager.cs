@@ -15,6 +15,8 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+
+
         foreach (Sound xs in XSounds)
         {
             xs.source = gameObject.AddComponent<AudioSource>();
@@ -79,5 +81,18 @@ public class AudioManager : MonoBehaviour
         {
             PlaySound(TieSounds);
         }
+    }
+
+    public bool ControlMusic()
+    {
+        CanPlayMusic = !CanPlayMusic;
+        Debug.Log("Music: " + CanPlayMusic);
+        return CanPlayMusic;
+    }
+    public bool ControlSoundEffects()
+    {
+        CanPlaySoundEffects = !CanPlaySoundEffects;
+        Debug.Log("SoundEffects: " + CanPlaySoundEffects);
+        return CanPlaySoundEffects;
     }
 }

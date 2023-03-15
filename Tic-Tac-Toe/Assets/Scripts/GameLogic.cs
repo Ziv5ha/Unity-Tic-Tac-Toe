@@ -41,6 +41,7 @@ public class GameLogic : MonoBehaviour
     private void StartGame()
     {
         ClearGame();
+        if (!xTurn) ChangeTurn();
         gameEnded = false;
         mapArray = GenerateEmptyMapArray();
         SpawnTiles();
@@ -123,9 +124,14 @@ public class GameLogic : MonoBehaviour
         }
         else
         {
-            UITile.RotateUITile(xTurn);
-            xTurn = !xTurn;
+            ChangeTurn();
         }
+    }
+
+    private void ChangeTurn()
+    {
+        UITile.RotateUITile(xTurn);
+        xTurn = !xTurn;
     }
 
     public string GetTurn()
