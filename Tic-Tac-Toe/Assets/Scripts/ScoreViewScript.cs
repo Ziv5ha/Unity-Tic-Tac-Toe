@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// nice class!
 public class ScoreViewScript : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI XUI;

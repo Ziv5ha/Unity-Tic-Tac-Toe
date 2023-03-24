@@ -13,6 +13,8 @@ public class SoundsBtnsScript : MonoBehaviour
     [SerializeField] private Image SoundEffectsBtn;
     [SerializeField] private Sprite SoundEffectsOn;
     [SerializeField] private Sprite SoundEffectsOff;
+
+    // general confusion with the hierarchy of this class. is it telling someone else what to do? shouldn't it send events instead?
     public void ControlMusic()
     {
         if (audioManager.ControlMusic())
